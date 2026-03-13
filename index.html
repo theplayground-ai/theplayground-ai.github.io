@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn with Me — Claude Code (AI Systems) for Beginners</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    background: linear-gradient(160deg, #F0E5F5 0%, #E8DAF0 30%, #F5E0D8 70%, #FAE8D8 100%);
+    color: #3D3530;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Soft warm gradient background */
+  .bg-glow {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 20%, rgba(200, 180, 220, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(220, 190, 170, 0.1) 0%, transparent 50%);
+    animation: glowMove 25s ease-in-out infinite alternate;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  @keyframes glowMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-3%, -2%); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 60px 24px 40px;
+  }
+
+  /* Header */
+  .badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(150, 130, 170, 0.1);
+    border: 1px solid rgba(150, 130, 170, 0.2);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #8A7098;
+    letter-spacing: 0.5px;
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 38px;
+    font-weight: 600;
+    line-height: 1.15;
+    margin-bottom: 8px;
+    color: #2E2535;
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: #7A6E88;
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+
+  .subtitle span {
+    color: #6E5880;
+    font-weight: 500;
+  }
+
+  /* What you'll learn section */
+  .learn-section {
+    background: #FFFFFF;
+    border: 1px solid rgba(168, 142, 118, 0.12);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 12px rgba(60, 45, 30, 0.04);
+  }
+
+  .learn-section h2 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    color: #2E2823;
+    letter-spacing: 0.2px;
+  }
+
+  .learn-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .learn-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .learn-icon {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    background: rgba(168, 142, 118, 0.08);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  .learn-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: #8A7098;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .learn-text {
+    font-size: 14px;
+    color: #6B5E54;
+    line-height: 1.55;
+  }
+
+  /* Form */
+  .form-section {
+    margin-bottom: 20px;
+  }
+
+  .form-section h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #2E2535;
+  }
+
+  .form-section p {
+    font-size: 14px;
+    color: #7A6E88;
+    margin-bottom: 24px;
+  }
+
+  .field {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #6E5880;
+    margin-bottom: 8px;
+  }
+
+  input, textarea, select {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(150, 130, 170, 0.2);
+    border-radius: 12px;
+    color: #3D3530;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    transition: all 0.2s ease;
+    outline: none;
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: #C4B8AD;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: rgba(150, 130, 170, 0.45);
+    box-shadow: 0 0 0 3px rgba(150, 130, 170, 0.08);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  /* Tech experience selector */
+  .exp-selector {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .exp-option {
+    flex: 1;
+    min-width: calc(50% - 4px);
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(150, 130, 170, 0.18);
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: #7A6E88;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+
+  .exp-option:hover {
+    border-color: rgba(150, 130, 170, 0.35);
+    background: rgba(150, 130, 170, 0.05);
+  }
+
+  .exp-option.active {
+    border-color: rgba(150, 130, 170, 0.5);
+    background: rgba(150, 130, 170, 0.1);
+    color: #4A3860;
+    font-weight: 500;
+  }
+
+  .exp-option input {
+    display: none;
+  }
+
+  /* Submit */
+  .submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: #8A7098;
+    border: none;
+    border-radius: 12px;
+    color: #FFFFFF;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.2px;
+  }
+
+  .submit-btn:hover {
+    background: #7A6088;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(120, 90, 140, 0.2);
+  }
+
+  .submit-btn:active {
+    transform: translateY(0);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(150, 130, 170, 0.12);
+  }
+
+  .footer a {
+    color: #8A7098;
+    text-decoration: underline;
+    font-size: 14px;
+  }
+
+  .footer p {
+    font-size: 12px;
+    color: #B8ADA3;
+    margin-top: 8px;
+  }
+
+  /* Success state */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 60px 0;
+  }
+
+  .success-screen.show {
+    display: block;
+  }
+
+  .success-icon {
+    width: 64px;
+    height: 64px;
+    background: rgba(150, 130, 170, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+  }
+
+  .success-icon svg {
+    width: 28px;
+    height: 28px;
+    stroke: #8A7098;
+    fill: none;
+    stroke-width: 2.5;
+  }
+
+  .success-screen h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #2E2823;
+  }
+
+  .success-screen p {
+    font-size: 15px;
+    color: #8A7E75;
+    line-height: 1.6;
+  }
+
+  /* Form hidden when success */
+  .form-wrapper.hidden {
+    display: none;
+  }
+
+  /* Loading spinner */
+  .spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(250, 248, 245, 0.3);
+    border-top-color: #FAF8F5;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<div class="container">
+  <div class="badge">Free Community Call</div>
+
+  <h1>Learn with Me? :)</h1>
+  <p class="subtitle">AI for Complete Beginners<br><span>Claude Code, Systems & Automation</span></p>
+
+  <div class="form-wrapper" id="formWrapper">
+    <div class="form-section">
+      <h2>Apply to join</h2>
+      <p>Takes 30 seconds. I'll reach out with details.</p>
+    </div>
+
+    <form id="applicationForm">
+      <div class="field">
+        <label for="name">Your name</label>
+        <input type="text" id="name" name="name" placeholder="First name" required>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@email.com" required>
+      </div>
+
+      <div class="field">
+        <label>What's your level of knowledge in AI?</label>
+        <div class="exp-selector">
+          <div class="exp-option" onclick="selectExp(this, 'I barely know what the word AI means')">
+            <input type="radio" name="experience" value="I barely know what the word AI means">
+            I barely know what the word AI means
+          </div>
+          <div class="exp-option" onclick="selectExp(this, 'I have a little experience using things like ChatGPT')">
+            <input type="radio" name="experience" value="I have a little experience using things like ChatGPT">
+            I've used things like ChatGPT a little
+          </div>
+          <div class="exp-option" onclick="selectExp(this, 'I use AI tools regularly but want to go deeper')">
+            <input type="radio" name="experience" value="I use AI tools regularly but want to go deeper">
+            I use AI tools regularly but want to go deeper
+          </div>
+          <div class="exp-option" onclick="selectExp(this, 'I have built a few things and want to level up')">
+            <input type="radio" name="experience" value="I have built a few things and want to level up">
+            I've built a few things and want to level up
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="instagram">Instagram @ <span style="font-weight:400;color:#B0A0B8;">(optional)</span></label>
+        <input type="text" id="instagram" name="instagram" placeholder="@yourhandle">
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">I'm in, let's go</button>
+    </form>
+  </div>
+
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+    </div>
+    <h2>You're on the list!</h2>
+    <p>I'll be in touch with details soon.<br>In the meantime, come say hi:</p>
+    <a href="https://chat.whatsapp.com/LOx1Dc7Kl9gCenjfVIozDA" target="_blank" style="display:inline-block;margin-top:20px;padding:14px 28px;background:#25D366;color:white;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;text-decoration:none;transition:all 0.3s ease;">Join the WhatsApp Group</a>
+    <p style="margin-top:12px;font-size:12px;color:#B0A0B8;line-height:1.5;">Drop your questions before the call, get early access to<br>tools and resources, and meet everyone else joining</p>
+  </div>
+
+  <div class="footer">
+    <a href="https://instagram.com/callie.rounds" target="_blank">@callie.rounds</a>
+    <p>Built with Claude Code</p>
+  </div>
+</div>
+
+<script>
+  // Experience selector
+  function selectExp(el, value) {
+    document.querySelectorAll('.exp-option').forEach(opt => opt.classList.remove('active'));
+    el.classList.add('active');
+    el.querySelector('input').checked = true;
+  }
+
+  // Form submission
+  const SCRIPT_URL = 'GOOGLE_APPS_SCRIPT_URL_HERE';
+
+  document.getElementById('applicationForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>';
+
+    const expEl = document.querySelector('input[name="experience"]:checked');
+
+    const data = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      instagram: document.getElementById('instagram').value,
+      experience: expEl ? expEl.value : 'Not specified',
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      document.getElementById('formWrapper').classList.add('hidden');
+      document.getElementById('successScreen').classList.add('show');
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = "I'm in, let's go";
+      alert('Something went wrong. Try again?');
+    }
+  });
+</script>
+
+</body>
+</html>
