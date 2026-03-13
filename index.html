@@ -436,7 +436,7 @@
     el.querySelector('input').checked = true;
   }
 
-  // Form submission via Formsubmit
+  // Form submission
   document.getElementById('applicationForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
@@ -450,16 +450,13 @@
       name: document.getElementById('name').value,
       email: document.getElementById('email').value,
       instagram: document.getElementById('instagram').value,
-      experience: expEl ? expEl.value : 'Not specified',
-      _subject: 'New Playground Application',
-      _captcha: 'false',
-      _template: 'table'
+      experience: expEl ? expEl.value : 'Not specified'
     };
 
     try {
-      const res = await fetch('https://formsubmit.co/ajax/callierounds@gmail.com', {
+      await fetch('https://theplayground-ai.netlify.app/.netlify/functions/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
 
