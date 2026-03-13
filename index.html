@@ -370,7 +370,9 @@
       <p>Takes 30 seconds. I'll reach out with details.</p>
     </div>
 
-    <form id="applicationForm">
+    <form id="applicationForm" name="applications" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="applications">
+      <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
       <div class="field">
         <label for="name">Your name</label>
         <input type="text" id="name" name="name" placeholder="First name" required>
@@ -436,9 +438,7 @@
     el.querySelector('input').checked = true;
   }
 
-  // Form submission
-  const SCRIPT_URL = 'GOOGLE_APPS_SCRIPT_URL_HERE';
-
+  // Form submission via Netlify Forms
   document.getElementById('applicationForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
@@ -446,22 +446,13 @@
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span>';
 
-    const expEl = document.querySelector('input[name="experience"]:checked');
-
-    const data = {
-      name: document.getElementById('name').value,
-      email: document.getElementById('email').value,
-      instagram: document.getElementById('instagram').value,
-      experience: expEl ? expEl.value : 'Not specified',
-      timestamp: new Date().toISOString()
-    };
+    const formData = new FormData(this);
 
     try {
-      await fetch(SCRIPT_URL, {
+      await fetch('/', {
         method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
       });
 
       document.getElementById('formWrapper').classList.add('hidden');
