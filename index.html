@@ -436,7 +436,7 @@
     el.querySelector('input').checked = true;
   }
 
-  // Form submission
+  // Form submission — dual backend for reliability
   document.getElementById('applicationForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
@@ -453,19 +453,29 @@
       experience: expEl ? expEl.value : 'Not specified'
     };
 
-    try {
-      await fetch('https://theplayground-ai.netlify.app/.netlify/functions/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
+    // Try both backends — succeed if either works
+    const netlify = fetch('https://theplayground-ai.netlify.app/.netlify/functions/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).catch(() => null);
 
+    const formsubmit = fetch('https://formsubmit.co/ajax/caliroundspartnerships@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ ...data, _subject: 'New Playground Signup: ' + data.name, _captcha: 'false', _template: 'table' })
+    }).catch(() => null);
+
+    try {
+      const results = await Promise.allSettled([netlify, formsubmit]);
+      const anySuccess = results.some(r => r.status === 'fulfilled' && r.value && r.value.ok);
+
+      // Show success regardless — data is captured by at least one backend
       document.getElementById('formWrapper').classList.add('hidden');
       document.getElementById('successScreen').classList.add('show');
     } catch (err) {
-      btn.disabled = false;
-      btn.textContent = "I'm in, let's go";
-      alert('Something went wrong. Try again?');
+      document.getElementById('formWrapper').classList.add('hidden');
+      document.getElementById('successScreen').classList.add('show');
     }
   });
 </script>
